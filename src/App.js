@@ -6,14 +6,11 @@ import Login from "./components/auth/Login";
 import Quora from "./components/Quora";
 import { login, logout, selectUser } from "./features/userSlice";
 import { auth } from "./firebase";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-
+import Profile from "./components/Profile"
+import{BrowserRouter as Router,Switch,Route} from 'react-router-dom';
+import Feed from "./components/Feed";
 function App() {
+  
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -34,11 +31,19 @@ function App() {
     });
   }, [dispatch]);
  
-      
   return(
+    <Router>
+    <Switch>
+    <Route path="/" exact component ={Feed}>
+    <div className="App">{user ? <Quora /> : <Login />}</div>
+    </Route>
+    <Route path="/Profile" component={Profile}/>
+    </Switch>
 
-       <div className="App">{user ? <Quora /> : <Login />}</div>
-
+</Router> 
+     
 )
+
 }
+
 export default App;
